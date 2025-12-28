@@ -8,9 +8,10 @@ interface MapViewProps {
   currentLocation: { lat: number, lng: number };
   stops: RouteStop[];
   trafficSegments?: TrafficSegment[];
+  speed?: number;
 }
 
-const MapView: React.FC<MapViewProps> = ({ currentLocation, stops, trafficSegments = [] }) => {
+const MapView: React.FC<MapViewProps> = ({ currentLocation, stops, trafficSegments = [], speed = 0 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState(1);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -184,14 +185,17 @@ const MapView: React.FC<MapViewProps> = ({ currentLocation, stops, trafficSegmen
     <div className="relative bg-emerald-950 rounded-[40px] overflow-hidden border border-emerald-800/40 h-[600px] w-full shadow-2xl group/map">
       {/* HUD Info */}
       <div className="absolute top-8 left-8 z-20 space-y-4">
-        <div className="bg-emerald-900/60 backdrop-blur-xl border border-emerald-400/20 p-5 rounded-[32px] shadow-2xl flex items-center gap-5 transition-transform group-hover/map:scale-[1.02]">
-          <div className="w-14 h-14 bg-[#008B8B]/10 rounded-2xl flex items-center justify-center text-[#008B8B] border border-[#008B8B]/20">
-            <Icons.Navigation className="w-7 h-7 animate-pulse" />
-          </div>
-          <div>
-            <p className="text-[10px] text-emerald-600 font-black uppercase tracking-[0.2em]">Active Satellite Uplink</p>
-            <p className="text-xl font-black text-white uppercase tracking-tighter">A1 Autostrada, Tuscany</p>
-          </div>
+        {/* Speedometer HUD */}
+        <div className="bg-emerald-900/60 backdrop-blur-xl border border-emerald-400/20 p-5 rounded-[32px] shadow-2xl flex items-center gap-6 transition-transform group-hover/map:scale-[1.02]">
+           <div className="flex flex-col items-center justify-center">
+              <span className="text-4xl font-black text-white font-mono tracking-tighter leading-none">{speed}</span>
+              <span className="text-[10px] text-[#008B8B] font-black uppercase tracking-widest mt-1">KM/H</span>
+           </div>
+           <div className="w-px h-10 bg-emerald-800/50"></div>
+           <div>
+              <p className="text-[10px] text-emerald-600 font-black uppercase tracking-[0.2em]">Active Satellite Uplink</p>
+              <p className="text-xl font-black text-white uppercase tracking-tighter">A1 Autostrada, Tuscany</p>
+           </div>
         </div>
 
         {/* Real-time Clock and Date */}
