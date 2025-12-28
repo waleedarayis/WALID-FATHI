@@ -1,0 +1,7 @@
+{
+  "name": "WF Transporti Management Hub",
+  "description": "A comprehensive logistics and auto-transport management platform for WFTransporti, featuring real-time tracking, AI-powered route optimization, client CRM, and integrated messaging.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
